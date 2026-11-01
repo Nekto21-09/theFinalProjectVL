@@ -11,4 +11,20 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
+    <TabBar>
+        <Tab Title="Home">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:PlayerHP}"
+                Route="PlayerHP" />
+        </Tab>
+
+        <Tab Title="Tactics">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Tactics}"
+                Route="Tactics" />
+        </Tab>
+
+    </TabBar>
+
+
 </Shell>

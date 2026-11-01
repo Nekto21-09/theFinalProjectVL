@@ -23,8 +23,9 @@
     HorizontalOptions="Center" />
 
         <Entry
-            Placeholder="Email"
-            Keyboard="Email"
+            x:Name="UsernameEntry"
+            Placeholder="Username"
+            Keyboard="Text"
             TextColor="Black"
             BackgroundColor="White"
             Margin="0,10" />
@@ -35,7 +36,8 @@
         HorizontalOptions="Center" />
 
         <Entry
-        Placeholder="password"
+            x:Name="PasswordEntry"
+        Placeholder="Password"
         Keyboard="Password"
         TextColor="Black"
         BackgroundColor="White"
@@ -50,7 +52,7 @@
         <Button
         x:Name="Login"
         Text="Login"
-        Clicked="loginbt"
+        Clicked="OnLoginClicked"
         HorizontalOptions="Fill" />
 
 
