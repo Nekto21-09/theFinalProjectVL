@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Volly.LoginPage"
+             Title="LoginPage">
+    <VerticalStackLayout>
+        <Label 
+    Text="welcome back!"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+        <Label 
+    Text="ready to play?"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />   
+        <Label 
+    Text="Sign in to continue your volleyball journey."
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+
+        <Label 
+    Text="Email or Username"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+
+        <Entry
+            Placeholder="Email"
+            Keyboard="Email"
+            TextColor="Black"
+            BackgroundColor="White"
+            Margin="0,10" />
+
+        <Label 
+        Text="Password"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+
+        <Entry
+        Placeholder="password"
+        Keyboard="Password"
+        TextColor="Black"
+        BackgroundColor="White"
+        Margin="0,10" />
+
+        <Button
+    x:Name="password"
+    Text="forgot password?"
+    Clicked="ForgotPassword"
+    HorizontalOptions="Fill" />
+
+        <Button
+        x:Name="Login"
+        Text="Login"
+        Clicked="loginbt"
+        HorizontalOptions="Fill" />
+
+
+        <Label 
+    Text="New To Volly?"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+
+        <Button
+        x:Name="create"
+        Text="create account"
+        Clicked="CreatAcc"
+        HorizontalOptions="Fill" />
+
+        <Label 
+    Text="Quick prototype access"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
+
+        <Button
+        x:Name="EAP"
+        Text="enter as player"
+        Clicked="EAPbtn"
+        HorizontalOptions="Fill" />
+
+        <Button
+        x:Name="EAC"
+        Text="enter as coach"
+        Clicked="EACbtn"
+        HorizontalOptions="Fill" />
+
+
+    </VerticalStackLayout>
+</ContentPage>
+    
+    
+    
+    
+   
