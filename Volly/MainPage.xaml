@@ -1,63 +1,235 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Volly.MainPage">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Volly.MainPage"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#080E20">
 
-    <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-        <HorizontalStackLayout HeightRequest="185">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"/>
-            <Label Text="Volly" HorizontalOptions="Center" VerticalOptions="Center"/>
-        </HorizontalStackLayout>
-        <Border BackgroundColor="Transparent"
-                Stroke="#FBC02D"
-                StrokeThickness="2"
-                StrokeShape="RoundRectangle 6"
-                Padding="12,8"
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="28,25,28,24">
+
+        <!-- Background decorations -->
+
+        <Ellipse
+            WidthRequest="210"
+            HeightRequest="260"
+            Fill="#14264B"
+            Opacity="0.65"
+            HorizontalOptions="End"
+            VerticalOptions="Start"
+            TranslationX="105"
+            TranslationY="75"
+            Grid.RowSpan="3"/>
+
+        <Ellipse
+            WidthRequest="170"
+            HeightRequest="190"
+            Fill="#17283A"
+            Opacity="0.55"
+            HorizontalOptions="Start"
+            VerticalOptions="Center"
+            TranslationX="-110"
+            TranslationY="90"
+            Grid.RowSpan="3"/>
+
+        <!-- Main introduction -->
+
+        <VerticalStackLayout
+            Grid.Row="0"
+            Spacing="13"
+            Margin="0,43,0,0">
+
+            <Border
+                Background="#111D35"
+                Stroke="#30476D"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 15"
+                Padding="9,5"
+                HorizontalOptions="Start">
+
+                <Label
+                    Text="VOLLEYBALL, EVOLVED"
+                    FontSize="9"
+                    FontAttributes="Bold"
+                    CharacterSpacing="0.7"
+                    TextColor="#A7D0FF"/>
+
+            </Border>
+
+            <Label FontSize="37"
+                   LineHeight="0.95">
+
+                <Label.FormattedText>
+                    <FormattedString>
+
+                        <Span
+                            Text="Own every&#10;"
+                            TextColor="White"/>
+
+                        <Span
+                            Text="moment."
+                            TextColor="#82DFFF"/>
+
+                    </FormattedString>
+                </Label.FormattedText>
+
+            </Label>
+
+            <Label
+                Text="Train with purpose. Build smarter tactics.&#10;Become the player your team needs."
+                FontSize="12"
+                LineHeight="1.4"
+                TextColor="#A8BBD8"/>
+
+        </VerticalStackLayout>
+
+        <!-- Volleyball illustration -->
+
+        <Grid Grid.Row="1"
+              Margin="0,15,0,5">
+
+            <Ellipse
+                WidthRequest="250"
+                HeightRequest="190"
+                Stroke="#233754"
+                StrokeThickness="1"
                 HorizontalOptions="Center"
-                VerticalOptions="Center">
+                VerticalOptions="Center"
+                Rotation="12"/>
 
-            <Label Text="VOLLEYBALL, EVOLVED"
-                   TextColor="#333333"
-                   FontSize="16"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center" />
-        </Border>
+            <Ellipse
+                WidthRequest="210"
+                HeightRequest="155"
+                Stroke="#30465F"
+                StrokeThickness="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Rotation="-12"/>
 
-        <Label Text="Own every"
-           TextColor="#333333"
-           FontSize="16"
-           HorizontalTextAlignment="Center"
-           VerticalTextAlignment="Center" />
+            <GraphicsView
+                x:Name="VolleyballView"
+                WidthRequest="116"
+                HeightRequest="116"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
 
-        <Label Text="Moment"
-            TextColor="#333333"
-            FontSize="16"
-            HorizontalTextAlignment="Center"
-            VerticalTextAlignment="Center" />
+            <!-- Readiness card -->
 
+            <Border
+                Background="#121B30"
+                Stroke="#293750"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                Padding="10,8"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Margin="3,0,0,115">
 
-        <Label Text="Train with purpose. Build smarter tactics. Become the player your team needs."
-            TextColor="#333333"
-            FontSize="16"
-            HorizontalTextAlignment="Center"
-            VerticalTextAlignment="Center" />
+                <VerticalStackLayout Spacing="1">
 
-        <Button
-            x:Name="SignupBtn"
-            Text="Get Started"
-            Clicked="OnSignupClicked"
-            HorizontalOptions="Fill" />
+                    <Label
+                        Text="85%"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="White"/>
 
-        <Button
-            x:Name="LoginBtn"
-            Text="Aready have an account?"
-            Clicked="OnLoginClicked"
-            HorizontalOptions="Fill" />
-    </VerticalStackLayout>
+                    <Label
+                        Text="readiness"
+                        FontSize="9"
+                        TextColor="#9AAAC3"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+            <!-- Weekly progress card -->
+
+            <Border
+                Background="#121B30"
+                Stroke="#293750"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                Padding="10,8"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                Margin="0,115,0,0">
+
+                <VerticalStackLayout Spacing="1">
+
+                    <Label
+                        Text="+12"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="White"/>
+
+                    <Label
+                        Text="this week"
+                        FontSize="9"
+                        TextColor="#9AAAC3"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </Grid>
+
+        <!-- Bottom buttons -->
+
+        <VerticalStackLayout
+            Grid.Row="2"
+            Spacing="15">
+
+            <Border
+                Background="#79ABF2"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 12"
+                HeightRequest="46">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="OnGetStartedTapped"/>
+                </Border.GestureRecognizers>
+
+                <Grid RowDefinitions="*,Auto,*">
+
+                    <Label
+                        Grid.Row="1"
+                        Text="Get Started"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        TextColor="#071329"
+                        HorizontalOptions="Center"/>
+
+                    <Label
+                        Grid.Row="2"
+                        Text="›"
+                        FontSize="20"
+                        TextColor="#071329"
+                        HorizontalOptions="Center"
+                        TranslationY="-5"/>
+
+                </Grid>
+
+            </Border>
+
+            <Label
+                Text="I already have an account"
+                FontSize="12"
+                FontAttributes="Bold"
+                TextColor="#83B9FF"
+                HorizontalOptions="Center">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="OnLoginTapped"/>
+                </Label.GestureRecognizers>
+
+            </Label>
+
+        </VerticalStackLayout>
+
+    </Grid>
 
 </ContentPage>

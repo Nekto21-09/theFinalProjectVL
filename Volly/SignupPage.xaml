@@ -1,10 +1,302 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Volly.SignupPage">
-    <VerticalStackLayout>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Volly.SignupPage"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#080E20">
 
+    <ScrollView>
+        <VerticalStackLayout Padding="20,20,20,25" Spacing="0">
 
-    </VerticalStackLayout>
+            <!-- TOP BAR -->
+
+            <Grid ColumnDefinitions="*,Auto" HeightRequest="45">
+
+                <Border
+                    WidthRequest="34"
+                    HeightRequest="34"
+                    Background="#111D35"
+                    Stroke="#293750"
+                    StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Start">
+
+                    <Label
+                        Text="‹"
+                        FontSize="30"
+                        TextColor="White"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Margin="0,-5,0,0"/>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <GraphicsView
+                    x:Name="SignupLogo"
+                    Grid.Column="1"
+                    WidthRequest="38"
+                    HeightRequest="38"/>
+
+            </Grid>
+
+            <!-- HEADING -->
+
+            <VerticalStackLayout Margin="0,55,0,0" Spacing="13">
+
+                <Border
+                    Background="#111D35"
+                    Stroke="#30476D"
+                    StrokeShape="RoundRectangle 15"
+                    Padding="9,5"
+                    HorizontalOptions="Start">
+
+                    <Label
+                        Text="JOIN THE TEAM"
+                        FontSize="9"
+                        FontAttributes="Bold"
+                        TextColor="#A7D0FF"/>
+                </Border>
+
+                <Label
+                    Text="Create your account"
+                    FontSize="26"
+                    TextColor="White"/>
+
+                <Label
+                    Text="Your next level starts right here."
+                    FontSize="12"
+                    TextColor="#A8BBD8"/>
+
+            </VerticalStackLayout>
+
+            <!-- PLAYER / COACH -->
+
+            <Border
+                Margin="0,22,0,0"
+                Background="#10192B"
+                Stroke="#293750"
+                StrokeShape="RoundRectangle 13"
+                Padding="3">
+
+                <Grid ColumnDefinitions="*,*">
+
+                    <Border
+                        x:Name="PlayerRoleBorder"
+                        Background="#1B2942"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 9"
+                        Padding="8,10">
+
+                        <Label
+                            x:Name="PlayerRoleLabel"
+                            Text="♙  Player"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            HorizontalOptions="Center"/>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPlayerSelected"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <Border
+                        x:Name="CoachRoleBorder"
+                        Grid.Column="1"
+                        Background="Transparent"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 9"
+                        Padding="8,10">
+
+                        <Label
+                            x:Name="CoachRoleLabel"
+                            Text="▦  Coach"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            TextColor="#9AAAC3"
+                            HorizontalOptions="Center"/>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCoachSelected"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                </Grid>
+            </Border>
+
+            <!-- FORM -->
+
+            <VerticalStackLayout Margin="0,17,0,0" Spacing="7">
+
+                <Label
+                    Text="FULL NAME"
+                    FontSize="9"
+                    FontAttributes="Bold"
+                    TextColor="#A7D0FF"/>
+
+                <Entry
+                    x:Name="FullNameEntry"
+                    Placeholder="Alex Morgan"
+                    PlaceholderColor="#8497B3"
+                    TextColor="White"
+                    FontSize="13"
+                    BackgroundColor="#111B2D"
+                    HeightRequest="43"
+                    Margin="0,0,0,5"/>
+
+                <Label
+                    Text="EMAIL OR USERNAME"
+                    FontSize="9"
+                    FontAttributes="Bold"
+                    TextColor="#A7D0FF"/>
+
+                <Entry
+                    x:Name="EmailEntry"
+                    Placeholder="alex@volt.app"
+                    PlaceholderColor="#8497B3"
+                    TextColor="White"
+                    FontSize="13"
+                    BackgroundColor="#111B2D"
+                    HeightRequest="43"
+                    Margin="0,0,0,5"/>
+
+                <Label
+                    Text="PASSWORD"
+                    FontSize="9"
+                    FontAttributes="Bold"
+                    TextColor="#A7D0FF"/>
+
+                <Border
+                    Background="#111B2D"
+                    Stroke="#293750"
+                    StrokeShape="RoundRectangle 11"
+                    Padding="10,0"
+                    HeightRequest="43">
+
+                    <Grid ColumnDefinitions="*,Auto">
+
+                        <Entry
+                            x:Name="PasswordEntry"
+                            Placeholder="••••••••"
+                            PlaceholderColor="#8497B3"
+                            TextColor="White"
+                            FontSize="13"
+                            IsPassword="True"
+                            BackgroundColor="Transparent"
+                            VerticalOptions="Center"/>
+
+                        <Button
+                            x:Name="PasswordToggleButton"
+                            Grid.Column="1"
+                            Text="◉"
+                            FontSize="15"
+                            TextColor="#9AAAC3"
+                            BackgroundColor="Transparent"
+                            Padding="5,0"
+                            WidthRequest="35"
+                            Clicked="OnPasswordToggleClicked"/>
+
+                    </Grid>
+                </Border>
+
+                <!-- INVITATION CODE: PLAYER ONLY -->
+
+                <VerticalStackLayout
+                    x:Name="InvitationCodeSection"
+                    Margin="0,5,0,0"
+                    Spacing="7">
+
+                    <Grid ColumnDefinitions="*,Auto">
+
+                        <Label
+                            Text="TEAM INVITATION CODE"
+                            FontSize="9"
+                            FontAttributes="Bold"
+                            TextColor="#A7D0FF"/>
+
+                        <Label
+                            Grid.Column="1"
+                            Text="Optional"
+                            FontSize="9"
+                            TextColor="#A7D0FF"/>
+
+                    </Grid>
+
+                    <Entry
+                        x:Name="InvitationCodeEntry"
+                        Placeholder="e.g. FALCONS24"
+                        PlaceholderColor="#8497B3"
+                        TextColor="White"
+                        FontSize="13"
+                        BackgroundColor="#111B2D"
+                        HeightRequest="43"/>
+
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+
+            <!-- TERMS -->
+
+            <HorizontalStackLayout Margin="0,12,0,0" Spacing="5">
+
+                <CheckBox
+                    x:Name="TermsCheckBox"
+                    IsChecked="True"
+                    Color="#82B9FF"
+                    Scale="0.85"/>
+
+                <Label
+                    Text="I agree to the Terms of Service and Privacy Policy."
+                    FontSize="9"
+                    TextColor="#A8BBD8"
+                    VerticalOptions="Center"/>
+
+            </HorizontalStackLayout>
+
+            <!-- CREATE ACCOUNT -->
+
+            <Button
+                Text="Create Account"
+                FontSize="12"
+                FontAttributes="Bold"
+                TextColor="#071329"
+                BackgroundColor="#79ABF2"
+                CornerRadius="11"
+                HeightRequest="46"
+                Margin="0,12,0,0"
+                Clicked="OnCreateAccountClicked"/>
+
+            <!-- LOGIN -->
+
+            <HorizontalStackLayout
+                HorizontalOptions="Center"
+                Margin="0,13,0,0"
+                Spacing="3">
+
+                <Label
+                    Text="Already have an account?"
+                    FontSize="10"
+                    TextColor="#A8BBD8"/>
+
+                <Label
+                    Text="Log in"
+                    FontSize="10"
+                    FontAttributes="Bold"
+                    TextColor="#83B9FF">
+
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLoginTapped"/>
+                    </Label.GestureRecognizers>
+
+                </Label>
+
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>
-    
