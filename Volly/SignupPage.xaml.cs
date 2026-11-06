@@ -129,12 +129,10 @@ public partial class SignupPage : ContentPage
 
     // LOGIN
 
-    private async void OnLoginTapped(
-        object sender, TappedEventArgs e)
+
+    private async void OnLoginTapped(object sender, TappedEventArgs e)
     {
-        await DisplayAlert(
-            "Login",
-            "Login page will be created later.",
-            "OK");
+        await Shell.Current.GoToAsync("LoginPage");
     }
+
 }

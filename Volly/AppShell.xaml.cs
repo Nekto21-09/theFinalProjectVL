@@ -1,4 +1,5 @@
-﻿namespace Volly;
+﻿
+namespace Volly;
 
 public partial class AppShell : Shell
 {
@@ -7,5 +8,6 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         Routing.RegisterRoute("SignupPage", typeof(SignupPage));
+        Routing.RegisterRoute("LoginPage", typeof(LoginPage));
     }
 }

@@ -1,38 +1,55 @@
+
 namespace Volly;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
-	{
-		InitializeComponent();
-	}
+    private bool isPasswordVisible = false;
+
+    public LoginPage()
+    {
+        InitializeComponent();
+    }
+
+    private async void OnBackTapped(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
+    private void OnPasswordToggleClicked(object sender, EventArgs e)
+    {
+        isPasswordVisible = !isPasswordVisible;
+
+        PasswordEntry.IsPassword = !isPasswordVisible;
+        PasswordToggleButton.Text = isPasswordVisible ? "◎" : "◉";
+    }
+
+    private async void OnForgotPasswordTapped(object sender, TappedEventArgs e)
+    {
+        await DisplayAlert(
+            "Forgot password?",
+            "Password recovery will be available soon.",
+            "OK");
+    }
 
     private async void OnLoginClicked(object sender, EventArgs e)
     {
-        string username = UsernameEntry.Text;
-        string password = PasswordEntry.Text;
-
-        HttpClient client = new HttpClient();
-
-        try
+        if (string.IsNullOrWhiteSpace(EmailEntry.Text))
         {
-            HttpResponseMessage response = await client.GetAsync(
-                $"http://localhost:5264/login?username={username}&password={password}");
-
-            string result = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                await Shell.Current.GoToAsync("//PlayerHP");
-            }
-            else
-            {
-                await DisplayAlert("Error", result, "OK");
-            }
+            await DisplayAlert("Error", "Please enter your email or username.", "OK");
+            return;
         }
-        catch (Exception ex)
+
+        if (string.IsNullOrWhiteSpace(PasswordEntry.Text))
         {
-            await DisplayAlert("Error", ex.Message, "OK");
+            await DisplayAlert("Error", "Please enter your password.", "OK");
+            return;
         }
+
+        await DisplayAlert("Login", "Login functionality will be connected later.", "OK");
+    }
+
+    private async void OnCreateAccountTapped(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync("SignupPage");
     }
 }

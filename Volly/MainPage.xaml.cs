@@ -17,14 +17,12 @@ public partial class MainPage : ContentPage
         await Shell.Current.GoToAsync("SignupPage");
     }
 
-    private async void OnLoginTapped(
-        object sender, TappedEventArgs e)
+
+    private async void OnLoginTapped(object sender, TappedEventArgs e)
     {
-        await DisplayAlert(
-            "Login",
-            "Login page will open here.",
-            "OK");
+        await Shell.Current.GoToAsync("LoginPage");
     }
+
 }
 
 

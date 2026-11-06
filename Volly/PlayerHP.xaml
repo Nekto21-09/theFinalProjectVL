@@ -1,12 +1,527 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Volly.PlayerHP"
-             Title="PlayerHP">
-    <VerticalStackLayout>
-        <Label 
-            Text="Home page!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="Volly.PlayerHP"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#080E20">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20,24,20,24" Spacing="22">
+
+                <!-- Greeting -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Spacing="5">
+                        <Label x:Name="GreetingLabel"
+                               Text="Good morning,"
+                               FontSize="13"
+                               TextColor="#8DBEFF"/>
+                        <Label Text="Alex"
+                               FontSize="25"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                        <Label Text="Ready to own every moment?"
+                               FontSize="12"
+                               TextColor="#A8B5CC"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Next event -->
+                <Border BackgroundColor="#111B30"
+                        Stroke="#263A5A"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 18"
+                        Padding="15">
+                    <VerticalStackLayout Spacing="13">
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="NEXT TEAM EVENT"
+                                   FontSize="10"
+                                   FontAttributes="Bold"
+                                   TextColor="#8DBEFF"
+                                   CharacterSpacing="1"/>
+                            <Label Grid.Column="1"
+                                   Text="TODAY"
+                                   FontSize="9"
+                                   TextColor="#8DBEFF"/>
+                        </Grid>
+
+                        <Label Text="Team training"
+                               FontSize="17"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+
+                        <Label Text="18:00 – 20:00  •  Falcon Arena"
+                               FontSize="11"
+                               TextColor="#A8B5CC"/>
+
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="10">
+                            <Border BackgroundColor="#25395B"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    Padding="10"
+                                    WidthRequest="42"
+                                    HeightRequest="42">
+                                <Label Text="JL"
+                                       TextColor="White"
+                                       FontAttributes="Bold"
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"/>
+                            </Border>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="3">
+                                <Label Text="Led by"
+                                       FontSize="10"
+                                       TextColor="#A8B5CC"/>
+                                <Label Text="Coach Jordan Lee"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="White"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,*,*"
+                              ColumnSpacing="7">
+                            <Button x:Name="GoingButton"
+                                    Grid.Column="0"
+                                    Text="✓ Going"
+                                    FontSize="10"
+                                    Padding="2"
+                                    HeightRequest="36"
+                                    CornerRadius="10"
+                                    Clicked="OnGoingClicked"
+                                    BackgroundColor="#253D65"
+                                    TextColor="White"/>
+
+                            <Button x:Name="MaybeButton"
+                                    Grid.Column="1"
+                                    Text="Maybe"
+                                    FontSize="10"
+                                    Padding="2"
+                                    HeightRequest="36"
+                                    CornerRadius="10"
+                                    Clicked="OnMaybeClicked"
+                                    BackgroundColor="#0D172A"
+                                    TextColor="#A8B5CC"/>
+
+                            <Button x:Name="CantAttendButton"
+                                    Grid.Column="2"
+                                    Text="Can't attend"
+                                    FontSize="10"
+                                    Padding="2"
+                                    HeightRequest="36"
+                                    CornerRadius="10"
+                                    Clicked="OnCantAttendClicked"
+                                    BackgroundColor="#0D172A"
+                                    TextColor="#A8B5CC"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Team -->
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Blue Falcons"
+                               FontSize="16"
+                               TextColor="White"
+                               FontAttributes="Bold"/>
+                        <Label Grid.Column="1"
+                               Text="View team  ›"
+                               FontSize="11"
+                               TextColor="#72A8F2"
+                               VerticalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnViewTeamTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#24344E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 16"
+                            Padding="13">
+                        <Grid ColumnDefinitions="42,* ,Auto"
+                              ColumnSpacing="12">
+                            <Border BackgroundColor="#72A8F2"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    WidthRequest="42"
+                                    HeightRequest="42"
+                                    VerticalOptions="Center">
+                                <Label Text="BF"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"/>
+                            </Border>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="4">
+                                <Label Text="Blue Falcons"
+                                       FontSize="13"
+                                       FontAttributes="Bold"
+                                       TextColor="White"/>
+                                <Label Text="12 players · Premier Division"
+                                       FontSize="10"
+                                       TextColor="#A8B5CC"/>
+                                <Label Text="AM   NK   OS   TR   +8"
+                                       FontSize="10"
+                                       TextColor="#8DBEFF"/>
+                            </VerticalStackLayout>
+
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="25"
+                                   TextColor="#A8B5CC"
+                                   VerticalTextAlignment="Center"/>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnViewTeamTapped"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Today's plan -->
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Today's plan"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                        <Label Grid.Column="1"
+                               Text="View all  ›"
+                               FontSize="11"
+                               TextColor="#72A8F2"
+                               VerticalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnViewPlanTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+
+                    <!-- Exercises -->
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#24344E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 15"
+                            Padding="13">
+                        <Grid ColumnDefinitions="34,*,Auto"
+                              ColumnSpacing="10">
+                            <Label Text="⚒"
+                                   FontSize="19"
+                                   TextColor="#A8B5CC"
+                                   VerticalTextAlignment="Center"/>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="4">
+                                <Label Text="Explosive jump series"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="White"/>
+                                <Label Text="4 sets · 25 min"
+                                       FontSize="9"
+                                       TextColor="#A8B5CC"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="22"
+                                   TextColor="#A8B5CC"
+                                   VerticalTextAlignment="Center"/>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnExerciseTapped"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <!-- Water -->
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#24344E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 15"
+                            Padding="13">
+                        <Grid ColumnDefinitions="34,*,Auto"
+                              ColumnSpacing="10">
+                            <Border BackgroundColor="#1B3045"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 11"
+                                    WidthRequest="32"
+                                    HeightRequest="38"
+                                    VerticalOptions="Center">
+                                <Label Text="♧"
+                                       FontSize="19"
+                                       TextColor="#8DBEFF"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="4">
+                                <Label Text="Hydration goal"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="White"/>
+                                <Label x:Name="WaterProgressLabel"
+                                       Text="0 L / 3 L"
+                                       FontSize="9"
+                                       TextColor="#A8B5CC"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="22"
+                                   TextColor="#A8B5CC"
+                                   VerticalTextAlignment="Center"/>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnWaterTapped"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <!-- Sleep -->
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#24344E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 15"
+                            Padding="13">
+                        <Grid ColumnDefinitions="34,*,Auto"
+                              ColumnSpacing="10">
+                            <Border BackgroundColor="#29213E"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 11"
+                                    WidthRequest="32"
+                                    HeightRequest="38"
+                                    VerticalOptions="Center">
+                                <Label Text="☾"
+                                       FontSize="21"
+                                       TextColor="#B99BFF"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="4">
+                                <Label Text="Sleep recovery"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="White"/>
+                                <Label x:Name="SleepProgressLabel"
+                                       Text="Target: 8 hours tonight"
+                                       FontSize="9"
+                                       TextColor="#A8B5CC"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="22"
+                                   TextColor="#A8B5CC"
+                                   VerticalTextAlignment="Center"/>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSleepTapped"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Weekly progress -->
+                <Border BackgroundColor="#111B30"
+                        Stroke="#24344E"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="15">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Weekly progress"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                            <Label Text="This week"
+                                   FontSize="10"
+                                   TextColor="#8DBEFF"
+                                   VerticalTextAlignment="Center"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="12">
+                            <Label x:Name="WeeklyPercentageLabel"
+                                   Text="0%"
+                                   FontSize="27"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   VerticalTextAlignment="Center"/>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="6">
+                                <BoxView x:Name="WeeklyProgressBar"
+                                         HeightRequest="8"
+                                         CornerRadius="4"
+                                         Color="#72A8F2"
+                                         WidthRequest="0"
+                                         HorizontalOptions="Start"/>
+                                <Label x:Name="WeeklyComparisonLabel"
+                                       Text="Compared to last week: --"
+                                       FontSize="10"
+                                       TextColor="#A8B5CC"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Label Text="Your progress is based on the goals set by your coach."
+                               FontSize="10"
+                               TextColor="#8290A8"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Latest updates -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Latest updates"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#24344E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 15"
+                            Padding="13">
+                        <VerticalStackLayout Spacing="12">
+                            <Grid ColumnDefinitions="8,*"
+                                  ColumnSpacing="9">
+                                <BoxView Color="#72A8F2"
+                                         WidthRequest="6"
+                                         HeightRequest="6"
+                                         CornerRadius="3"
+                                         VerticalOptions="Start"
+                                         Margin="0,4,0,0"/>
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Spacing="4">
+                                    <Label Text="New tactical formation"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="White"/>
+                                    <Label Text="Coach published “Fast Attack R2” · 35m"
+                                           FontSize="9"
+                                           TextColor="#A8B5CC"/>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <BoxView HeightRequest="1"
+                                     Color="#26364F"/>
+
+                            <Grid ColumnDefinitions="8,*"
+                                  ColumnSpacing="9">
+                                <BoxView Color="#F2B65D"
+                                         WidthRequest="6"
+                                         HeightRequest="6"
+                                         CornerRadius="3"
+                                         VerticalOptions="Start"
+                                         Margin="0,4,0,0"/>
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Spacing="4">
+                                    <Label Text="Practice tomorrow at 18:00"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="White"/>
+                                    <Label Text="Falcon Arena · Court 2"
+                                           FontSize="9"
+                                           TextColor="#A8B5CC"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom navigation -->
+        <Grid Grid.Row="1"
+              BackgroundColor="#0B1427"
+              Padding="8,8,8,10"
+              ColumnDefinitions="*,*,*,*,*">
+
+            <VerticalStackLayout Grid.Column="0"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="⌂"
+                       FontSize="23"
+                       TextColor="#8DBEFF"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Home"
+                       FontSize="9"
+                       TextColor="#8DBEFF"
+                       HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="▦"
+                       FontSize="21"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Tactics"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTacticsTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="◎"
+                       FontSize="22"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="View"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnViewTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="▯"
+                       FontSize="22"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Book"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBookTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="4"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="♙"
+                       FontSize="22"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="You"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnYouTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>
