@@ -45,10 +45,10 @@ public partial class LoginPage : ContentPage
             return;
         }
 
-        await DisplayAlert("Login", "Login functionality will be connected later.", "OK");
+        await Shell.Current.GoToAsync("//PlayerHP");
     }
 
-    private async void OnCreateAccountTapped(object sender, TappedEventArgs e)
+    private async void x(object sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync("SignupPage");
     }

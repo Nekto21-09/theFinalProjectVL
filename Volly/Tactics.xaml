@@ -1,12 +1,969 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Volly.Tactics"
-             Title="Tactics">
-    <VerticalStackLayout>
-        <Label 
-            Text="Tactics!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="Volly.Tactics"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#080E20">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView x:Name="MainScrollView" Grid.Row="0">
+            <VerticalStackLayout Padding="18,22,18,20" Spacing="17">
+
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="BUILD · TEST · IMPROVE"
+                               FontSize="9"
+                               CharacterSpacing="1.1"
+                               TextColor="#72A8F2"/>
+                        <Label Text="Tactics Lab"
+                               FontSize="25"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="1"
+                            WidthRequest="38"
+                            HeightRequest="38"
+                            BackgroundColor="#111B30"
+                            Stroke="#26364F"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 19">
+                        <Label Text="•••"
+                               FontSize="15"
+                               TextColor="#A8B5CC"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- TOP TABS -->
+                <ScrollView Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="17">
+
+                        <Button Text="BOARD"
+                                FontSize="9"
+                                FontAttributes="Bold"
+                                TextColor="#8DBEFF"
+                                BackgroundColor="Transparent"
+                                Padding="0,5"
+                                Clicked="OnBoardTabClicked"/>
+
+                        <Button Text="SOLO SIM"
+                                FontSize="9"
+                                TextColor="#8290A8"
+                                BackgroundColor="Transparent"
+                                Padding="0,5"
+                                Clicked="OnSoloSimTabClicked"/>
+
+                        <Button Text="VS AI"
+                                FontSize="9"
+                                TextColor="#8290A8"
+                                BackgroundColor="Transparent"
+                                Padding="0,5"
+                                Clicked="OnVsAiTabClicked"/>
+
+                        <Button Text="PERFORMANCE"
+                                FontSize="9"
+                                TextColor="#8290A8"
+                                BackgroundColor="Transparent"
+                                Padding="0,5"
+                                Clicked="OnPerformanceTabClicked"/>
+
+                        <Button Text="MY TACTICS"
+                                FontSize="9"
+                                TextColor="#8290A8"
+                                BackgroundColor="Transparent"
+                                Padding="0,5"
+                                Clicked="OnMyTacticsTabClicked"/>
+
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- ================= BOARD ================= -->
+
+                <VerticalStackLayout x:Name="BoardContent" Spacing="17">
+
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#26364F"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 13"
+                            Padding="13">
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="FORMATION"
+                                       FontSize="9"
+                                       CharacterSpacing="1"
+                                       TextColor="#829BC0"/>
+
+                                <Label x:Name="FormationLabel"
+                                       Text="5-1 Formation"
+                                       FontSize="13"
+                                       FontAttributes="Bold"
+                                       TextColor="White"/>
+                            </VerticalStackLayout>
+
+                            <Label Grid.Column="1"
+                                   Text="›"
+                                   FontSize="25"
+                                   TextColor="#A8B5CC"
+                                   VerticalTextAlignment="Center"/>
+                        </Grid>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFormationTapped"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="COURT SETUP"
+                               FontSize="10"
+                               FontAttributes="Bold"
+                               TextColor="#8DBEFF"
+                               CharacterSpacing="1"/>
+
+                        <Label Grid.Column="1"
+                               Text="Drag to reposition"
+                               FontSize="9"
+                               TextColor="#8290A8"/>
+                    </Grid>
+
+                    <Border BackgroundColor="#172C4A"
+                            Stroke="#526E91"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="5">
+
+                        <Grid x:Name="CourtGrid" HeightRequest="445">
+
+                            <Grid RowDefinitions="*,Auto,*">
+                                <Grid Grid.Row="0" BackgroundColor="#24466B">
+                                    <Label Text="OPPONENT"
+                                           FontSize="8"
+                                           TextColor="#A9C5E5"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Start"
+                                           Margin="0,8,0,0"/>
+                                </Grid>
+
+                                <BoxView Grid.Row="1"
+                                         HeightRequest="4"
+                                         Color="#E7EDF5"/>
+
+                                <Grid Grid.Row="2" BackgroundColor="#B77C4C">
+                                    <Label Text="YOUR TEAM"
+                                           FontSize="8"
+                                           TextColor="#FFF0DF"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="End"
+                                           Margin="0,0,0,8"/>
+                                </Grid>
+                            </Grid>
+
+                            <BoxView BackgroundColor="#E7EDF5"
+                                     HeightRequest="1"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Fill"/>
+
+                            <AbsoluteLayout x:Name="PlayerLayer"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Fill">
+
+                                <!-- Opponent -->
+                                <Border BackgroundColor="#D94D78"
+                                        Stroke="#F5A2B9"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.15,0.20,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="2" TextColor="White" FontSize="13"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#D94D78"
+                                        Stroke="#F5A2B9"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.50,0.20,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="5" TextColor="White" FontSize="13"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#D94D78"
+                                        Stroke="#F5A2B9"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.85,0.20,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="8" TextColor="White" FontSize="13"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#D94D78"
+                                        Stroke="#F5A2B9"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.15,0.40,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="10" TextColor="White" FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#D94D78"
+                                        Stroke="#F5A2B9"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.50,0.40,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="12" TextColor="White" FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#D94D78"
+                                        Stroke="#F5A2B9"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.85,0.40,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="15" TextColor="White" FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- Your team -->
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.15,0.60,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="1" TextColor="White" FontSize="13"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.50,0.60,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="4" TextColor="White" FontSize="13"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.85,0.60,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="7" TextColor="White" FontSize="13"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.15,0.80,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="9" TextColor="White" FontSize="13"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.50,0.80,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="11" TextColor="White" FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.85,0.80,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="14" TextColor="White" FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped"/>
+                                        <PanGestureRecognizer PanUpdated="OnPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                            </AbsoluteLayout>
+                        </Grid>
+                    </Border>
+
+                    <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="15">
+                        <HorizontalStackLayout Spacing="5">
+                            <BoxView WidthRequest="8" HeightRequest="8"
+                                     CornerRadius="4" Color="#5799E8"/>
+                            <Label Text="Your team" FontSize="9" TextColor="#A8B5CC"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Grid.Column="1" Spacing="5">
+                            <BoxView WidthRequest="8" HeightRequest="8"
+                                     CornerRadius="4" Color="#D94D78"/>
+                            <Label Text="Opponent" FontSize="9" TextColor="#A8B5CC"/>
+                        </HorizontalStackLayout>
+
+                        <Label Grid.Column="2"
+                               Text="Tap to edit · Drag to move"
+                               FontSize="8"
+                               TextColor="#8290A8"
+                               HorizontalTextAlignment="End"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Text="↻  Reset"
+                                HeightRequest="43"
+                                CornerRadius="11"
+                                BackgroundColor="#17243A"
+                                TextColor="#C3D0E5"
+                                FontSize="11"
+                                Clicked="OnResetClicked"/>
+
+                        <Button Grid.Column="1"
+                                Text="Save tactic  ✓"
+                                HeightRequest="43"
+                                CornerRadius="11"
+                                BackgroundColor="#72A8F2"
+                                TextColor="#071226"
+                                FontSize="11"
+                                FontAttributes="Bold"
+                                Clicked="OnSaveTacticClicked"/>
+                    </Grid>
+
+                </VerticalStackLayout>
+
+                <!-- ================= SOLO SIM ================= -->
+
+                <VerticalStackLayout x:Name="SoloSimContent"
+                                     IsVisible="False"
+                                     Spacing="16">
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="SOLO SIMULATION"
+                               FontSize="10"
+                               CharacterSpacing="1"
+                               FontAttributes="Bold"
+                               TextColor="#8DBEFF"/>
+
+                        <Label Text="Test your lineup"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+
+                        <Label Text="Choose a game situation and explore how your players' skills affect the result."
+                               FontSize="11"
+                               TextColor="#A8B5CC"/>
+                    </VerticalStackLayout>
+
+                    <!-- SOLO COURT -->
+                    <Label Text="SIMULATION COURT"
+                           FontSize="10"
+                           CharacterSpacing="1"
+                           FontAttributes="Bold"
+                           TextColor="#8DBEFF"/>
+
+                    <Border BackgroundColor="#B77C4C"
+                            Stroke="#526E91"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="5">
+
+                        <Grid HeightRequest="340">
+
+                            <Grid RowDefinitions="*,Auto,*">
+                                <Grid Grid.Row="0" BackgroundColor="#24466B">
+                                    <Label Text="OPPONENT"
+                                           FontSize="8"
+                                           TextColor="#A9C5E5"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Start"
+                                           Margin="0,8,0,0"/>
+                                </Grid>
+
+                                <BoxView Grid.Row="1"
+                                         HeightRequest="4"
+                                         Color="#E7EDF5"/>
+
+                                <Grid Grid.Row="2" BackgroundColor="#B77C4C">
+                                    <Label Text="YOUR TEAM"
+                                           FontSize="8"
+                                           TextColor="#FFF0DF"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="End"
+                                           Margin="0,0,0,8"/>
+                                </Grid>
+                            </Grid>
+
+                            <BoxView BackgroundColor="#E7EDF5"
+                                     HeightRequest="1"
+                                     VerticalOptions="Center"/>
+
+                            <AbsoluteLayout x:Name="SoloPlayerLayer"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Fill">
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.15,0.60,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="1" TextColor="White"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="OnSoloPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.50,0.60,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="4" TextColor="White"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="OnSoloPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.85,0.60,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="7" TextColor="White"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="OnSoloPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.15,0.80,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="9" TextColor="White"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="OnSoloPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.50,0.80,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="11" TextColor="White"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="OnSoloPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Border BackgroundColor="#5799E8"
+                                        Stroke="#A9D0FF"
+                                        StrokeShape="RoundRectangle 22"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        AbsoluteLayout.LayoutBounds="0.85,0.80,40,40"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <Label Text="14" TextColor="White"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                    <Border.GestureRecognizers>
+                                        <PanGestureRecognizer PanUpdated="OnSoloPlayerPanUpdated"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                            </AbsoluteLayout>
+                        </Grid>
+                    </Border>
+
+                    <Button Text="↻  Reset player positions"
+                            HeightRequest="40"
+                            CornerRadius="10"
+                            BackgroundColor="#17243A"
+                            TextColor="#C3D0E5"
+                            Clicked="OnSoloResetClicked"/>
+
+                    <!-- SCENARIOS -->
+                    <Label Text="SELECT SCENARIO"
+                           FontSize="9"
+                           CharacterSpacing="1"
+                           FontAttributes="Bold"
+                           TextColor="#829BC0"/>
+
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="7">
+
+                        <Button x:Name="ServeReceiveButton"
+                                Text="Serve&#10;Receive"
+                                FontSize="10"
+                                CornerRadius="10"
+                                Padding="5"
+                                HeightRequest="62"
+                                BackgroundColor="#253D65"
+                                TextColor="White"
+                                Clicked="OnServeReceiveClicked"/>
+
+                        <Button x:Name="DefensiveCoverageButton"
+                                Grid.Column="1"
+                                Text="Defensive&#10;Coverage"
+                                FontSize="10"
+                                CornerRadius="10"
+                                Padding="5"
+                                HeightRequest="62"
+                                BackgroundColor="#111B30"
+                                TextColor="#A8B5CC"
+                                Clicked="OnDefensiveCoverageClicked"/>
+
+                        <Button x:Name="TransitionAttackButton"
+                                Grid.Column="2"
+                                Text="Transition&#10;Attack"
+                                FontSize="10"
+                                CornerRadius="10"
+                                Padding="5"
+                                HeightRequest="62"
+                                BackgroundColor="#111B30"
+                                TextColor="#A8B5CC"
+                                Clicked="OnTransitionAttackClicked"/>
+                    </Grid>
+
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#26364F"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="13">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="ACTIVE SCENARIO"
+                                   FontSize="8"
+                                   CharacterSpacing="1"
+                                   TextColor="#829BC0"/>
+
+                            <Label x:Name="ScenarioDescriptionLabel"
+                                   Text="Serve Receive · Medium difficulty"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+
+                            <Label Text="Tap a player below to view their individual attributes."
+                                   FontSize="10"
+                                   TextColor="#A8B5CC"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- PLAYERS -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="YOUR PLAYERS"
+                               FontSize="10"
+                               CharacterSpacing="1"
+                               FontAttributes="Bold"
+                               TextColor="#8DBEFF"/>
+
+                        <Label Grid.Column="1"
+                               Text="Tap to view stats"
+                               FontSize="9"
+                               TextColor="#8290A8"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*"
+                          RowDefinitions="Auto,Auto,Auto"
+                          ColumnSpacing="9"
+                          RowSpacing="9">
+
+                        <Button Text="①  Player 1 · Setter"
+                                FontSize="10"
+                                HeightRequest="42"
+                                BackgroundColor="#172C4A"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnSoloPlayerClicked"/>
+
+                        <Button Grid.Column="1"
+                                Text="④  Player 4 · Outside"
+                                FontSize="10"
+                                HeightRequest="42"
+                                BackgroundColor="#172C4A"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnSoloPlayerClicked"/>
+
+                        <Button Grid.Row="1"
+                                Text="⑦  Player 7 · Middle"
+                                FontSize="10"
+                                HeightRequest="42"
+                                BackgroundColor="#172C4A"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnSoloPlayerClicked"/>
+
+                        <Button Grid.Row="1"
+                                Grid.Column="1"
+                                Text="⑨  Player 9 · Opposite"
+                                FontSize="10"
+                                HeightRequest="42"
+                                BackgroundColor="#172C4A"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnSoloPlayerClicked"/>
+
+                        <Button Grid.Row="2"
+                                Text="⑪  Player 11 · Middle"
+                                FontSize="10"
+                                HeightRequest="42"
+                                BackgroundColor="#172C4A"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnSoloPlayerClicked"/>
+
+                        <Button Grid.Row="2"
+                                Grid.Column="1"
+                                Text="⑭  Player 14 · Libero"
+                                FontSize="10"
+                                HeightRequest="42"
+                                BackgroundColor="#172C4A"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Clicked="OnSoloPlayerClicked"/>
+                    </Grid>
+
+                    <!-- LINEUP -->
+                    <Border BackgroundColor="#111B30"
+                            Stroke="#26364F"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="13">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="LINEUP"
+                                   FontSize="8"
+                                   CharacterSpacing="1"
+                                   TextColor="#829BC0"/>
+
+                            <Label Text="Blue Falcons · 6 players"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+
+                            <Label Text="Demo player profiles are used for now. Later, these will be loaded from your team's database."
+                                   FontSize="10"
+                                   TextColor="#A8B5CC"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- RUN SIMULATION -->
+                    <Button Text="▶  RUN SIMULATION"
+                            HeightRequest="48"
+                            CornerRadius="12"
+                            BackgroundColor="#72A8F2"
+                            TextColor="#071226"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            Clicked="OnRunSimulationClicked"/>
+
+                    <!-- RESULTS -->
+                    <VerticalStackLayout x:Name="SimulationResults"
+                                         IsVisible="False"
+                                         Spacing="12">
+
+                        <Label Text="SIMULATION RESULTS"
+                               FontSize="10"
+                               CharacterSpacing="1"
+                               FontAttributes="Bold"
+                               TextColor="#8DBEFF"/>
+
+                        <Border BackgroundColor="#142640"
+                                Stroke="#345477"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 14"
+                                Padding="16">
+                            <VerticalStackLayout Spacing="5"
+                                                 HorizontalOptions="Center">
+
+                                <Label Text="OVERALL EFFECTIVENESS"
+                                       FontSize="9"
+                                       CharacterSpacing="1"
+                                       TextColor="#A8B5CC"/>
+
+                                <Label x:Name="SimulationScoreLabel"
+                                       Text="--%"
+                                       FontSize="38"
+                                       FontAttributes="Bold"
+                                       TextColor="#8DBEFF"
+                                       HorizontalTextAlignment="Center"/>
+
+                                <Label x:Name="SimulationRatingLabel"
+                                       Text="Ready to improve"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*,Auto"
+                              RowDefinitions="Auto,Auto,Auto"
+                              RowSpacing="10">
+
+                            <Label Text="Positioning"
+                                   FontSize="11"
+                                   TextColor="#C3D0E5"/>
+
+                            <Label x:Name="PositioningScoreLabel"
+                                   Grid.Column="1"
+                                   FontSize="11"
+                                   TextColor="White"/>
+
+                            <Label Grid.Row="1"
+                                   Text="Attack options"
+                                   FontSize="11"
+                                   TextColor="#C3D0E5"/>
+
+                            <Label x:Name="AttackScoreLabel"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   FontSize="11"
+                                   TextColor="White"/>
+
+                            <Label Grid.Row="2"
+                                   Text="Weak area"
+                                   FontSize="11"
+                                   TextColor="#C3D0E5"/>
+
+                            <Label x:Name="WeakAreaLabel"
+                                   Grid.Row="2"
+                                   Grid.Column="1"
+                                   FontSize="11"
+                                   TextColor="#F5A2B9"/>
+                        </Grid>
+
+                        <Label x:Name="SimulationAdviceLabel"
+                               FontSize="11"
+                               TextColor="#A8B5CC"/>
+
+                        <Button Text="↻  TRY AGAIN"
+                                HeightRequest="43"
+                                CornerRadius="11"
+                                BackgroundColor="#17243A"
+                                TextColor="#C3D0E5"
+                                Clicked="OnRunSimulationClicked"/>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTTOM NAVIGATION -->
+        <Grid Grid.Row="1"
+              BackgroundColor="#0B1427"
+              Padding="8,8,8,10"
+              ColumnDefinitions="*,*,*,*,*">
+
+            <VerticalStackLayout Grid.Column="0"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="⌂"
+                       FontSize="23"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Home"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnHomeTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="▦"
+                       FontSize="21"
+                       TextColor="#8DBEFF"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Tactics"
+                       FontSize="9"
+                       TextColor="#8DBEFF"
+                       HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="◎"
+                       FontSize="22"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="View"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnViewTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="▯"
+                       FontSize="22"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Book"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBookTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="4"
+                                 Spacing="3"
+                                 HorizontalOptions="Center">
+                <Label Text="♙"
+                       FontSize="22"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="You"
+                       FontSize="9"
+                       TextColor="#8290A8"
+                       HorizontalTextAlignment="Center"/>
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnYouTapped"/>
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+        </Grid>
+    </Grid>
 </ContentPage>

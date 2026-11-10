@@ -121,10 +121,8 @@ public partial class SignupPage : ContentPage
             return;
         }
 
-        await DisplayAlert(
-            "Success",
-            $"Registration as {selectedRole} is ready!",
-            "OK");
+        await Shell.Current.GoToAsync("//PlayerHP");
+
     }
 
     // LOGIN

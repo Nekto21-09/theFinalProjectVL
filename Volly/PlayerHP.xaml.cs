@@ -260,12 +260,12 @@ public partial class PlayerHP : ContentPage
             "OK");
     }
 
+
     private async void OnTacticsTapped(object sender, TappedEventArgs e)
     {
-        await DisplayAlert("Tactics",
-            "The Tactics page will be created soon.",
-            "OK");
+        await Shell.Current.GoToAsync("Tactics");
     }
+
 
     private async void OnViewTapped(object sender, TappedEventArgs e)
     {
