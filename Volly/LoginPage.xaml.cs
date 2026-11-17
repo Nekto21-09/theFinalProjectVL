@@ -1,4 +1,6 @@
 
+using System.Text.Json;
+
 namespace Volly;
 
 public partial class LoginPage : ContentPage
@@ -45,7 +47,20 @@ public partial class LoginPage : ContentPage
             return;
         }
 
-        await Shell.Current.GoToAsync("//PlayerHP");
+        try
+        {
+            HttpClient httpClient = new HttpClient();
+            string str = await httpClient.GetStringAsync($"http://localhost:5264/login?username={EmailEntry.Text}&password={PasswordEntry.Text}");
+
+            User user = JsonSerializer.Deserialize<User>(str);
+           
+
+            await Shell.Current.GoToAsync("//PlayerHP");
+        }
+        catch
+        {
+            await DisplayAlertAsync("Error", "An error occurred while logging in.", "OK");
+        }
     }
 
     private async void x(object sender, TappedEventArgs e)
